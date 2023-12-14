@@ -8,6 +8,7 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
   const [pdfHeading, setPdfHeading] = useState('');
   const [selectedPdf, setSelectedPdf] = useState(null);
   const [validationError, setValidationError] = useState('');
+  const [pdfValidationError, setPdfValidationError] = useState('');
   const userId = useSelector((state) => state.user.userData.payload._id);
 
   const handlePdfHeadingChange = (e) => {
@@ -21,6 +22,11 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
     }
   };
 
+  const closeModal=()=>{
+    setSelectedPdf(null)
+    setPdfHeading('')
+    onRequestClose()
+  }
   const handlePdfFileChange = (e) => {
     const file = e.target.files[0];
 
@@ -28,10 +34,12 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
       const allowedExtensions = /(\.pdf)$/i;
 
       if (!allowedExtensions.exec(file.name)) {
-        setValidationError('Only PDF files are allowed');
+        setPdfValidationError('Only PDF files are allowed');
       } else {
         setSelectedPdf(file);
         setValidationError('');
+        setPdfValidationError('')
+
       }
     }
   };
@@ -44,7 +52,7 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
       }
 
       if (!selectedPdf) {
-        setValidationError('Please select a PDF file');
+        setPdfValidationError('Please select a PDF file');
         return;
       }
       const Extracted=false
@@ -58,6 +66,8 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
 
       if (response.data.status === true) {
         console.log('Upload successful:', response.data);
+        setSelectedPdf(null)
+        setPdfHeading('')
         onRequestClose();
       } else {
         console.log('Error in upload');
@@ -70,7 +80,7 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={closeModal}
       contentLabel="Upload PDF Modal"
       className="rounded-lg border bg-gray-300 border-gray-900 shadow p-6"
       style={{
@@ -111,6 +121,9 @@ const PdfUploadModal = ({ isOpen, onRequestClose }) => {
           onChange={handlePdfFileChange}
           className="w-full p-2 bg-white border border-black-900 rounded-lg focus:outline-none focus:ring focus:border-blue-400 text-black-900"
         />
+         {pdfValidationError && (
+          <p className="text-red-500 text-sm mt-1">{pdfValidationError}</p>
+        )}
       </div>
       <button
         onClick={handleUpload}
