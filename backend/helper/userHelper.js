@@ -2,14 +2,16 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User=require('../model/userSchema')
 const Pdf=require('../model/pdfSchema')
+
+
 module.exports={
 
     createToken: async (userId, username) => {
 
-        const secretKey = 'd2365790aadbaef646d8825c53a3e3822447333cd0898f2d1df5854ffbaf8f9375d66c0156ed9a68f6432e84ea6de0d77424834ff57bedd55a4bd9b719b3fde3';
+        const JWT_SECRET = process.env.JWT_SECRET;
 
-        if (secretKey) {
-            const token = jwt.sign({ id: userId, username: username }, secretKey, {
+        if (JWT_SECRET) {
+            const token = jwt.sign({ id: userId, username: username }, JWT_SECRET, {
                 expiresIn: '30d',
             });
             return token;
