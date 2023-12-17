@@ -30,7 +30,6 @@ function PdfDisplay() {
     fetchAllPdf();
   }, [userId, isModalOpen,]);
 
-  // Function to handle delete
   const handleDelete = (pdfId) => {
 
     axios.delete(`/deletepdf/${pdfId}`).then((response)=>{

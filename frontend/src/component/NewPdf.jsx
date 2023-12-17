@@ -28,7 +28,6 @@ function NewPdf({ onExtract }) {
     fetchAllPdf();
   }, [userId, onExtract]);
 
-  // Function to handle delete
   const handleDelete = (pdfId) => {
     axios.delete(`/deletepdf/${pdfId}`).then((response) => {
       toast.info(response.data.message);
@@ -52,17 +51,14 @@ function NewPdf({ onExtract }) {
         method: 'GET',
         responseType: 'blob',
       });
-      // Create a blob from the response data
       const blob = new Blob([response.data], { type: 'application/pdf' });
   
-      // Create a download link and trigger a click
       const downloadLink = document.createElement('a');
       downloadLink.href = window.URL.createObjectURL(blob);
-      downloadLink.download = pdf.title.endsWith('.pdf') ? pdf.title : `${pdf.title}.pdf`; // Ensure proper file extension
+      downloadLink.download = pdf.title.endsWith('.pdf') ? pdf.title : `${pdf.title}.pdf`; 
       document.body.appendChild(downloadLink);
       downloadLink.click();
   
-      // Clean up by removing the link from the document
       document.body.removeChild(downloadLink);
     } catch (error) {
       console.error('Error:', error);
@@ -74,7 +70,6 @@ function NewPdf({ onExtract }) {
   return (
     
     <div className="min-h-[470px] w-full md:w-1/2 lg:w-1/3 xl:w-1/4 m-2 bg-gray-300 rounded-lg shadow-lg p-4 ">
-      {/* Heading */}
       <div className=" ">
 
       <div className=" ml-8  bg-white rounded-lg shadow-md p-4 mb-4">
@@ -82,7 +77,6 @@ function NewPdf({ onExtract }) {
       </div>
       </div>
       <div className="pdf-container overflow-y-auto max-h-[470px]">
-      {/* Render existing PDF cards */}
       {pdfs.length === 0 ? (
         <div className="flex items-center justify-center h-full">
           <h1 className="text-2xl font-serif font-medium">No Extracted PDF</h1>
@@ -100,7 +94,6 @@ function NewPdf({ onExtract }) {
               key={index}
               className="bg-white  shadow-xl rounded-xl border border-gray-300 hover:border-2 border-gray-300 m-2  relative  max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
             >
-              {/* Delete icon */}
               <div className="mb-3">
                 <button
                   className="absolute top-1 right-1 "
@@ -113,7 +106,6 @@ function NewPdf({ onExtract }) {
                   />
                 </button>
               </div>
-              {/* PDF content */}
               <div className="bg-custom-background w-40 h-auto rounded-md shadow-sm flex flex-col items-center justify-center text-center">
                 <h1 className="font-semibold font-serif text-sm mt-3 font-medium break-words max-w-full">
                   {pdf.title}
@@ -143,7 +135,6 @@ function NewPdf({ onExtract }) {
       )}
       </div>
 
-      {/* Render upload modal */}
 
       {isPreviewOpen && (
         <ExtractedPdf pdfFile={selectedPdf} onClose={handleClosePreview} />

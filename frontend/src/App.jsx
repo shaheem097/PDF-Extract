@@ -17,7 +17,7 @@ function App() {
   }, [auth,]);
 
   return (
-   <div className="app">
+   <div className="app"> 
     <BrowserRouter>
     
       <Routes>

@@ -148,13 +148,11 @@ function PageRearrange({ onClose, extractedPages,pdfHeading,previewclose }) {
 
   return (
     <div>
-      {/* Backdrop */}
       <div
         className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50"
         onClick={onClose}
       />
 
-      {/* PageRearrange component */}
       <DndProvider backend={HTML5Backend}>
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-screen w-3/4 rounded-lg shadow bg-white p-4 overflow-y-auto">
           <div className="flex justify-between mt-4 absolute top-0 left-0 w-full p-4">
@@ -177,7 +175,6 @@ function PageRearrange({ onClose, extractedPages,pdfHeading,previewclose }) {
             </h1>
           </div>
 
-          {/* Display extracted pages as cards with black border */}
           <div className="m-2 border-black border h-auto min-h-full rounded-lg">
             <div className="flex flex-wrap gap-3 justify-center">
               {pages.map((extractedPage, index) => (
