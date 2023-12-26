@@ -3,7 +3,7 @@ import { logoutUser } from '../Redux/Reducers/userReducer';
 import { store } from '../Redux/store';
 
 const axiosInterceptorInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://pdfextractor-1cor.onrender.com',
 });
 
 axiosInterceptorInstance.interceptors.request.use(
